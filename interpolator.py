@@ -2,6 +2,7 @@
 # Modeling steps: script, functional programing and OOP programing
 from math import log
 import numpy as np
+from scipy.interpolate import Akima1DInterpolator
 
 # Input data: define some dummy data to test the script
 energy = [1,2,3]  # Energy values of the distribution
@@ -12,13 +13,17 @@ interpolated_energy = 1.5  # Energy value to interpolate
 log_energy = [log(i) for i in energy]
 log_values = None
 
-# Interpolate
-interpolated_value = np.interp(interpolated_energy, energy,values)
+# Interpolate lineal
+interpolated_value = np.interp(interpolated_energy, energy,values)# get interpolated_energy, energy and values as arguments for the np.interp function
+#Akima interpolation
+akima_interpolator = Akima1DInterpolator(energy, values)#get energy and values as args for the Akima1D function
+interpolated_value_akima = akima_interpolator(interpolated_energy) #shows in result the result of the Akima1D interpolation
 
 # Print results
 print(f'Energy: {energy}')
 print(f'Logarithmic energy: {log_energy}')
 print (f'Interpolated value: {interpolated_energy}: {interpolated_value}')
+print (f'Interpolated value (Akima) {interpolated_energy}: {interpolated_value_akima}')
 
 # ------------------------------------
 
