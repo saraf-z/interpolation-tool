@@ -1,6 +1,7 @@
-# Estructura del proyecto 
- Propósito del programa: leer datos desde un documento excel, recoger los datos, interpolarlos. 
-# pasos a dar:
+# interpolation-tool
+Tool for the interpolation of logaritmic data
+
+#Development notes 
 1- entrada de datos 
 2- logica del proceso
 3- salida de los datos
