@@ -54,7 +54,9 @@ def akima_interpolation(energy, values, interpolated_energy):
     interpolated_value_akima = akima_interpolator(interpolated_energy)
     return interpolated_value_akima
 
-
 # Print results
 print(f'Energy: {energy}')
 print(f'Logarithmic energy: {log_energy}')
+print(f'Values: {values}')
+print(f'Logarithmic values: {log_values}')
+print(f'Interpolated value (Akima) at energy {interpolated_energy}: {interpolated_value_akima}')
