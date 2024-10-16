@@ -41,7 +41,13 @@ def take_logarithm(energy, values):
 
 log_energy, log_values = take_logarithm(energy, values)
 
-# Interpolate
+# Interpolate lineal: takes values: energy, values and interpolated energy, returns interpolated value with the solution
+def linear_interpolation(energy, values, interpolated_energy):
+    """Interpolate the value at the given energy point."""
+    interpolated_value = np.interp(interpolated_energy, energy, values)
+    return interpolated_value
+
+# Interpolate akima:
 
 # Print results
 print(f'Energy: {energy}')
