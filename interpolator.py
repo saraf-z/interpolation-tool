@@ -47,7 +47,13 @@ def linear_interpolation(energy, values, interpolated_energy):
     interpolated_value = np.interp(interpolated_energy, energy, values)
     return interpolated_value
 
-# Interpolate akima:
+# Interpolate akima: takes energy, values and interpolated_energy, returns interpolated_value_akima
+def akima_interpolation(energy, values, interpolated_energy):
+    """Interpolate the value at the given energy point using Akima interpolation."""
+    akima_interpolator = Akima1DInterpolator(energy, values)
+    interpolated_value_akima = akima_interpolator(interpolated_energy)
+    return interpolated_value_akima
+
 
 # Print results
 print(f'Energy: {energy}')
