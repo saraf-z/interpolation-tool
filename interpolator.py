@@ -1,6 +1,7 @@
 # Goal: Interpolate quantity from quantity energy distribution
 # Modeling steps: script, functional programing and OOP programing
 from math import log
+import numpy as np
 
 # Input data: define some dummy data to test the script
 energy = [1,2,3]  # Energy values of the distribution
@@ -12,10 +13,12 @@ log_energy = [log(i) for i in energy]
 log_values = None
 
 # Interpolate
+interpolated_value = np.interp(interpolated_energy, energy,values)
 
 # Print results
 print(f'Energy: {energy}')
 print(f'Logarithmic energy: {log_energy}')
+print (f'Interpolated value: {interpolated_energy}: {interpolated_value}')
 
 # ------------------------------------
 
