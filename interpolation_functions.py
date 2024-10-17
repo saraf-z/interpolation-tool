@@ -2,15 +2,6 @@ import numpy as np
 from scipy.interpolate import Akima1DInterpolator
 from math import log, exp
 
-# Input data: define some dummy data to test the script
-energy = [1,2,3]  # Energy values of the distribution
-values = [10,20,30]  # Variable values of the distribution
-interpolated_energy = 1.5  # Energy value to interpolate
-
-#Print results
-print(f'Energy: {energy}')
-print(f'Values: {values}')
-print(f'Interpolated Energy: {interpolated_energy}')
 
 # Logarithmic transformation: calculate logarithmic values of energy and values
 def take_logarithm(energy, values, interpolated_energy):
@@ -20,15 +11,12 @@ def take_logarithm(energy, values, interpolated_energy):
     log_interpolated_energy = log(interpolated_energy)
     return log_energy, log_values, log_interpolated_energy
 
-log_energy, log_values, log_interpolated_energy = take_logarithm(energy, values, interpolated_energy)
-#print results
-print(f'logarithmic transformation of energy, values and interpolated_energy: {log_energy, log_values, log_interpolated_energy}')
 
 # Interpolate lineal: takes values: energy, values and interpolated energy, returns interpolated value with the solution
 def log_linear_interpolation(log_energy, log_values, log_interpolated_energy):
     """Interpolate the value at the given energy point."""
-    interpolated_value = np.interp(interpolated_energy, energy, values)
-    return interpolated_value
+    log_interpolated_value = np.interp(log_interpolated_energy, log_energy, log_values)
+    return log_interpolated_value
 
 
 # Interpolate akima: takes energy, values and interpolated_energy, returns interpolated_value_akima
@@ -38,11 +26,32 @@ def akima_interpolation(energy, values, interpolated_energy):
     interpolated_value_akima = akima_interpolator(interpolated_energy)
     return interpolated_value_akima
 
-#main block
 
-if __name__ == "__main__":
+def main():
+    # Input data: define some dummy data to test the script
+    energy = [1, 2, 3]  # Energy values of the distribution
+    values = [10, 20, 30]  # Variable values of the distribution
+    interpolated_energy = 1.5  # Energy value to interpolate
+
+    # Print results
+    print(f'Energy: {energy}')
+    print(f'Values: {values}')
+    print(f'Interpolated Energy: {interpolated_energy}')
+
+    log_energy, log_values, log_interpolated_energy = take_logarithm(energy, values, interpolated_energy)
+    # print results
+    print(
+        f'logarithmic transformation of energy, values and interpolated_energy: {log_energy, log_values, log_interpolated_energy}')
+    log_interpolated_value = log_linear_interpolation(log_energy, log_values, log_interpolated_energy)
+    # print results
+    print(f'lineal interpolation of log_energy, log_values and log_interpolated_energy: {log_interpolated_value}')
+
     take_logarithm(energy, values, interpolated_energy)
     log_linear_interpolation(log_energy, log_values, log_interpolated_energy)
     akima_interpolation(energy, values, interpolated_energy)
 
 
+# main block
+
+if __name__ == "__main__":
+    main()
