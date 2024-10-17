@@ -9,25 +9,26 @@ interpolated_energy = 1.5  # Energy value to interpolate
 
 #Print results
 print(f'Energy: {energy}')
-print
+print(f'Values: {values}')
+print(f'Interpolated Energy: {interpolated_energy}')
 
 # Logarithmic transformation: calculate logarithmic values of energy and values
-def take_logarithm(energy, values):
+def take_logarithm(energy, values, interpolated_energy):
     """Calculate the logarithm of a set of values."""
     log_energy = [log(i) for i in energy]
     log_values = [log(i) for i in values]
-    return log_energy, log_values
+    log_interpolated_energy = log(interpolated_energy)
+    return log_energy, log_values, log_interpolated_energy
 
-log_energy, log_values = take_logarithm(energy, values)
-
-
+log_energy, log_values, log_interpolated_energy = take_logarithm(energy, values, interpolated_energy)
+#print results
+print(f'logarithmic transformation of energy, values and interpolated_energy: {log_energy, log_values, log_interpolated_energy}')
 
 # Interpolate lineal: takes values: energy, values and interpolated energy, returns interpolated value with the solution
-def linear_interpolation(energy, values, interpolated_energy):
+def log_linear_interpolation(log_energy, log_values, log_interpolated_energy):
     """Interpolate the value at the given energy point."""
     interpolated_value = np.interp(interpolated_energy, energy, values)
     return interpolated_value
-
 
 
 # Interpolate akima: takes energy, values and interpolated_energy, returns interpolated_value_akima
@@ -40,13 +41,8 @@ def akima_interpolation(energy, values, interpolated_energy):
 #main block
 
 if __name__ == "__main__":
-    take_logarithm(energy, values)
-    linear_interpolation(energy, values, interpolated_energy)
+    take_logarithm(energy, values, interpolated_energy)
+    log_linear_interpolation(log_energy, log_values, log_interpolated_energy)
     akima_interpolation(energy, values, interpolated_energy)
 
-# Print results
-print(f'Energy: {energy}')
-print(f'Logarithmic energy: {log_energy}')
-print(f'Values: {values}')
-print(f'Logarithmic values: {log_values}')
 
