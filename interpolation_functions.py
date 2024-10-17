@@ -2,6 +2,8 @@ import numpy as np
 from scipy.interpolate import Akima1DInterpolator
 from math import log, exp
 
+from interpolation_script import log_interpolated_value_akima
+
 
 # Logarithmic transformation: calculate logarithmic values of energy and values
 def take_logarithm(energy, values, interpolated_energy):
@@ -20,11 +22,11 @@ def log_linear_interpolation(log_energy, log_values, log_interpolated_energy):
 
 
 # Interpolate akima: takes energy, values and interpolated_energy, returns interpolated_value_akima
-def akima_interpolation(energy, values, interpolated_energy):
+def log_akima_interpolation(log_energy, log_values, log_interpolated_energy):
     """Interpolate the value at the given energy point using Akima interpolation."""
-    akima_interpolator = Akima1DInterpolator(energy, values)
-    interpolated_value_akima = akima_interpolator(interpolated_energy)
-    return interpolated_value_akima
+    akima_interpolator = Akima1DInterpolator(log_energy, log_values)
+    log_interpolated_value_akima = akima_interpolator(log_interpolated_energy)
+    return log_interpolated_value_akima
 
 
 def main():
@@ -39,16 +41,17 @@ def main():
     print(f'Interpolated Energy: {interpolated_energy}')
 
     log_energy, log_values, log_interpolated_energy = take_logarithm(energy, values, interpolated_energy)
-    # print results
-    print(
-        f'logarithmic transformation of energy, values and interpolated_energy: {log_energy, log_values, log_interpolated_energy}')
+    # print results of take_logarithm
+    print( f'log_energy, log_values, log_interpolated_energy: {log_energy, log_values, log_interpolated_energy}')
     log_interpolated_value = log_linear_interpolation(log_energy, log_values, log_interpolated_energy)
-    # print results
-    print(f'lineal interpolation of log_energy, log_values and log_interpolated_energy: {log_interpolated_value}')
+    # print results of log_lineal_interpolation
+    print(f'log_interpolated_value: {log_interpolated_value}')
+    #print results of log_akima_interpolation
+    print(f'log_interpolated_value_akima: {log_interpolated_value_akima}')
 
     take_logarithm(energy, values, interpolated_energy)
     log_linear_interpolation(log_energy, log_values, log_interpolated_energy)
-    akima_interpolation(energy, values, interpolated_energy)
+    log_akima_interpolation(log_energy, log_values, log_interpolated_energy)
 
 
 # main block
