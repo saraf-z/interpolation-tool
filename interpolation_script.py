@@ -4,6 +4,8 @@ from math import log, exp
 import numpy as np
 from scipy.interpolate import Akima1DInterpolator
 
+print('Script interpolator_script.py')
+
 # Input data: define some dummy data to test the script
 energy = [1,2,3]  # Energy values of the distribution
 values = [10,20,30]  # Variable values of the distribution

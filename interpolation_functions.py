@@ -2,7 +2,6 @@ import numpy as np
 from scipy.interpolate import Akima1DInterpolator
 from math import log, exp
 
-from interpolation_script import log_interpolated_value_akima
 
 
 # Logarithmic transformation: calculate logarithmic values of energy and values
@@ -30,6 +29,7 @@ def log_akima_interpolation(log_energy, log_values, log_interpolated_energy):
 
 
 def main():
+    print('Script interpolator_functions.py')
     # Input data: define some dummy data to test the script
     energy = [1, 2, 3]  # Energy values of the distribution
     values = [10, 20, 30]  # Variable values of the distribution
@@ -44,4 +44,13 @@ def main():
 
 if __name__ == "__main__":
     main()
-#cli que pida datos: energia, valores y dato a interpolar
+
+
+#cli console requesting data from user: energy, values and interpolated_energy
+#energy input, three numbers
+print(f'introduce data for energy, then press enter:')
+energy_input= str (input())
+print(f'introduce data for values, then press enter:')
+value_input= str (input())
+
+print (f'the result of your operation is:{energy_input} {value_input}')
