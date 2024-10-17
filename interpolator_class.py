@@ -47,6 +47,8 @@ def main():
     values = interpolator.values
     interpolated_energy = interpolator.interpolated_energy
     log_energy = interpolator.log_linear_interpolation(energy, values, interpolated_energy)
+    log_values = interpolator.log_linear_interpolation(energy, values, interpolated_energy)
+
 
 
 
