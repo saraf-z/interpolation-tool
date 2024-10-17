@@ -2,6 +2,8 @@ from math import log, exp
 import numpy as np
 from scipy.interpolate import Akima1DInterpolator
 
+from interpolation_functions import take_logarithm
+
 
 # interpolator class
 class Interpolator:
@@ -38,21 +40,15 @@ def main():
     values = [10, 20, 30]  # Variable values of the distribution
     interpolated_energy = 1.5  # Energy value to interpolate
 
-    print("Energy", energy)
-    print("Values", values)
-    print("Interpolated_energy", interpolated_energy)
-
     # Create an instance of class Interpolator
     interpolator = Interpolator(energy, values, interpolated_energy)
 
     energy = interpolator.energy
     values = interpolator.values
     interpolated_energy = interpolator.interpolated_energy
+    log_energy = interpolator.log_linear_interpolation(energy, values, interpolated_energy)
 
-    # Print the attributes of the interpolator object
-    print("Energy (from interpolator):", interpolator.energy)
-    print("Values (from interpolator):", interpolator.values)
-    print("Interpolated energy (from interpolator):", interpolator.interpolated_energy)
+
 
     print(type(interpolator))
 
