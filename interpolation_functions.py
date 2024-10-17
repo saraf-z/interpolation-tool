@@ -44,3 +44,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+#cli que pida datos: energia, valores y dato a interpolar
