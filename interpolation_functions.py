@@ -36,18 +36,19 @@ def main():
     interpolated_energy = 1.5  # Energy value to interpolate
 
     # Print results
-    print(f'Energy: {energy}')
-    print(f'Values: {values}')
-    print(f'Interpolated Energy: {interpolated_energy}')
+    #print(f'Energy: {energy}')
+   # print(f'Values: {values}')
+    #print(f'Interpolated Energy: {interpolated_energy}')
 
     log_energy, log_values, log_interpolated_energy = take_logarithm(energy, values, interpolated_energy)
     # print results of take_logarithm
-    print( f'log_energy, log_values, log_interpolated_energy: {log_energy, log_values, log_interpolated_energy}')
-    log_interpolated_value = log_linear_interpolation(log_energy, log_values, log_interpolated_energy)
+    #print(f'log_energy, log_values, log_interpolated_energy: {log_energy, log_values, log_interpolated_energy}')
+    #log_interpolated_value = log_linear_interpolation(log_energy, log_values, log_interpolated_energy)
     # print results of log_lineal_interpolation
-    print(f'log_interpolated_value: {log_interpolated_value}')
-    #print results of log_akima_interpolation
-    print(f'log_interpolated_value_akima: {log_interpolated_value_akima}')
+    #print(f'log_interpolated_value: {log_interpolated_value}')
+    # print results of log_akima_interpolation
+    #print(f'log_interpolated_value_akima: {log_interpolated_value_akima}')
+
 
     take_logarithm(energy, values, interpolated_energy)
     log_linear_interpolation(log_energy, log_values, log_interpolated_energy)
