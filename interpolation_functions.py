@@ -1,5 +1,4 @@
 import math
-
 import numpy as np
 from scipy.interpolate import Akima1DInterpolator
 from math import log, exp
@@ -10,7 +9,7 @@ from math import log, exp
 def take_logarithm(energy, values, interpolated_energy):
     """Calculate the logarithm of a set of values."""
     log_energy = [log(i) for i in energy]
-    log_values = [log(i) for i in values]
+    log_values = [log(e) for e in values]
     log_interpolated_energy = log(interpolated_energy)
     return log_energy, log_values, log_interpolated_energy
 
@@ -34,30 +33,31 @@ def log_to_value(log_interpolated_value, log_interpolated_value_akima): #functio
     interpolated_value_akima = math.exp(log_interpolated_value_akima)
     return interpolated_value, interpolated_value_akima
 
-
-
 def main():
     print('Script interpolator_functions.py')
     # Input data: define some dummy data to test the script
     energy = [1, 2, 3]  # Energy values of the distribution
     values = [10, 20, 30]  # Variable values of the distribution
     interpolated_energy = 1.5  # Energy value to interpolate
+    #take logarithms of the data
     log_energy, log_values, log_interpolated_energy = take_logarithm(energy, values, interpolated_energy)
-    take_logarithm(energy, values, interpolated_energy)
-    log_linear_interpolation(log_energy, log_values, log_interpolated_energy)
-    log_akima_interpolation(log_energy, log_values, log_interpolated_energy)
-    log_to_value(log_interpolated_value, log_interpolated_value_akima)
+    #log-linear
+    log_interpolated_value = log_linear_interpolation(log_energy, log_values, log_interpolated_energy)
+    #log-akima
+    log_interpolated_value_akima = log_akima_interpolation(log_energy, log_values, log_interpolated_energy)
+    #convert to normal values
+    interpolated_value, interpolated_value_akima = log_to_value(log_interpolated_value, log_interpolated_value_akima)
 
     print(f'Energy: {energy}')  #prints values of variables used in functions
     print(f'Values:{values}')
     print(f'Interpolated_energy:{ interpolated_energy }')
     print(f'log_energy:{log_energy}')
     print(f'log_values:{log_values}')
-    print(f'log_interpolated_energy:{take_logarithm(energy, values, interpolated_energy)}')
-    print(f'log_interpolated_value:{log_linear_interpolation(log_energy, log_values, log_interpolated_energy)}')
-    print(f'log_interpolated_value_akima{log_akima_interpolation(log_energy, log_values, log_interpolated_energy)}')
-    #print(f'Interpolated value: {log_to_value(interpolated_value, interpolated_value_akima)}')
-    #print(f'Interpolated_value (Akima):{}')
+    print(f'log_interpolated_energy:{log_interpolated_energy}')
+    print(f'log_interpolated_value:{log_interpolated_value}')
+    print(f'log_interpolated_value_akima{log_interpolated_value_akima}')
+    print(f'Interpolated value: {interpolated_value}')
+    print(f'Interpolated_value (Akima):{interpolated_value_akima}')
 
 
 def cli():
