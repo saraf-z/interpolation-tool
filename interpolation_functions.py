@@ -27,6 +27,9 @@ def log_akima_interpolation(log_energy, log_values, log_interpolated_energy):
     log_interpolated_value_akima = akima_interpolator(log_interpolated_energy)
     return log_interpolated_value_akima
 
+#def log_to_value(log_interpolated_value, log_interpolated_value_akima):
+
+
 
 def main():
     print('Script interpolator_functions.py')
@@ -38,6 +41,16 @@ def main():
     take_logarithm(energy, values, interpolated_energy)
     log_linear_interpolation(log_energy, log_values, log_interpolated_energy)
     log_akima_interpolation(log_energy, log_values, log_interpolated_energy)
+    print(f'Energy: {energy}')  #prints values of variables used in functions
+    print(f'Values:{values}')
+    print(f'Interpolated_energy:{ interpolated_energy }')
+    print(f'log_energy:{log_energy}')
+    print(f'log_values:{log_values}')
+    print(f'log_interpolated_energy:{take_logarithm(energy, values, interpolated_energy)}')
+    print(f'log_interpolated_value:{log_linear_interpolation(log_energy, log_values, log_interpolated_energy)}')
+    print(f'log_interpolated_value_akima{log_akima_interpolation(log_energy, log_values, log_interpolated_energy)}')
+    print()
+
 
 def cli():
     # cli console requesting data from user: energy, values and interpolated_energy
