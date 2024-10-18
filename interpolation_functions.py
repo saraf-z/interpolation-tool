@@ -61,14 +61,37 @@ def main():
 
 
 def cli():
-    # cli console requesting data from user: energy, values and interpolated_energy
-    # energy input, three numbers
-    print(f'introduce data for energy, then press enter:')
-    energy_input = str(input())
-    print(f'introduce data for values, then press enter:')
-    value_input = str(input())
+    # Command Line Interface to get input from the user
+    # Step 1: Get input for energy and values from the user
+    print('Introduce data for energy (comma-separated, e.g., "1, 2, 3"), then press enter:')
+    energy_input = input()
 
-    print(f'the result of your operation is:{energy_input} {value_input}')
+    print('Introduce data for values (comma-separated, e.g., "10, 20, 30"), then press enter:')
+    values_input = input()
+
+    # Step 2: Get input for the interpolated energy value
+    print('Introduce interpolated energy (a single number, e.g., "1.5"):')
+    interpolated_energy = float(input())  # Convert the user input to a float
+
+    # Convert input strings to lists of floats
+    energy = [float(i.strip()) for i in energy_input.split(',')]
+    values = [float(i.strip()) for i in values_input.split(',')]
+
+    # Step 3: Perform the logarithmic transformation
+    log_energy, log_values, log_interpolated_energy = take_logarithm(energy, values, interpolated_energy)
+
+    # Step 4: Perform the interpolations
+    log_interpolated_value = log_linear_interpolation(log_energy, log_values, log_interpolated_energy)
+    log_interpolated_value_akima = log_akima_interpolation(log_energy, log_values, log_interpolated_energy)
+
+    # Step 5: Convert log-interpolated values to normal values
+    interpolated_value, interpolated_value_akima = log_to_value(log_interpolated_value, log_interpolated_value_akima)
+
+    # Step 6: Print the results
+    print(f'Log Interpolated Value (Linear): {log_interpolated_value}')
+    print(f'Log Interpolated Value (Akima): {log_interpolated_value_akima}')
+    print(f'Interpolated Value (Linear): {interpolated_value}')
+    print(f'Interpolated Value (Akima): {interpolated_value_akima}')
 
 
 
