@@ -39,6 +39,17 @@ def main():
     log_linear_interpolation(log_energy, log_values, log_interpolated_energy)
     log_akima_interpolation(log_energy, log_values, log_interpolated_energy)
 
+def cli():
+    # cli console requesting data from user: energy, values and interpolated_energy
+    # energy input, three numbers
+    print(f'introduce data for energy, then press enter:')
+    energy_input = str(input())
+    print(f'introduce data for values, then press enter:')
+    value_input = str(input())
+
+    print(f'the result of your operation is:{energy_input} {value_input}')
+
+
 
 # main block
 
@@ -46,11 +57,3 @@ if __name__ == "__main__":
     main()
 
 
-#cli console requesting data from user: energy, values and interpolated_energy
-#energy input, three numbers
-print(f'introduce data for energy, then press enter:')
-energy_input= str (input())
-print(f'introduce data for values, then press enter:')
-value_input= str (input())
-
-print (f'the result of your operation is:{energy_input} {value_input}')
