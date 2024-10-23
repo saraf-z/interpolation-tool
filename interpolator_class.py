@@ -3,8 +3,6 @@ from math import log, exp
 import numpy as np
 from scipy.interpolate import Akima1DInterpolator
 
-
-
 # interpolator class
 class Interpolator:
     # constructor to initialize attributes
@@ -31,25 +29,29 @@ class Interpolator:
         self.log_energy = [log(i) for i in self.energy]
         self.log_values = [log(i) for i in self.values]
         self.log_interpolated_energy = log(self.interpolated_energy)
-        return
 
     # method to create a lineal interpolation of the interpolated energy using "values" and "energy"
     def log_linear_interpolation(self):
         """Interpolate the value at the given energy point."""
+        if self.log_energy is None or self.log_values is None:
+            self.take_logarithm()
         self.interpolated_value = np.interp(self.log_interpolated_energy, self.log_energy, self.log_values)
-        return
+        return self.interpolated_value
 
     # method to create an akima-type interpolation of the interpolated energy
-    def log_akima_interpolation(self, log_energy, log_values, log_interpolated_energy):
+    def log_akima_interpolation(self):
         """Interpolate the value at the given energy point using Akima interpolation."""
-        akima_interpolator = Akima1DInterpolator(self.log_energy, self.log_values)
+        if self.log_energy is None or self.log_values is None:
+          self.take_logarithm_()
+        akima_interpolator = Akima1DInterpolator (self.log_energy, self.log_values)
         self.interpolated_value = akima_interpolator(self.log_interpolated_energy)
         return self.interpolated_value
+
     @staticmethod
-    def log_to_value(self,log_energy, log_values,log_interpolated_value):  # function to return values from logarithmic to int
+    def log_to_value(log_interpolated_value):  # function to return values from logarithmic to int
        """transforms values from logarithmic scale to lineal"""
-       interpolated_value = exp(log_interpolated_value)
-       return interpolated_value
+       #interpolated_value = exp(log_interpolated_value)
+       return exp(log_interpolated_value)
 
 
 def main():
@@ -62,19 +64,17 @@ def main():
 
     # Create an instance of class Interpolator
     interpolator = Interpolator(energy, values, interpolated_energy)
+    # Perform linear interpolation
+    linear_value = interpolator.log_linear_interpolation()
+    print("Linear Interpolation:", linear_value)
 
-    energy = interpolator.energy
-    values = interpolator.values
-    interpolated_energy = interpolator.interpolated_energy
-    #log_energy = interpolator.log_linear_interpolation(energy, values, interpolated_energy)
-    #log_values = interpolator.log_linear_interpolation(energy, values, interpolated_energy)
+    # Perform Akima interpolation
+    akima_value = interpolator.log_akima_interpolation()
+    print("Akima Interpolation:", akima_value)
 
-
-
-
-
-
-
+    # Convert the interpolated logarithmic value to linear scale
+    linear_interpolated_value = Interpolator.log_to_value(log(linear_value))
+    print("Linear Interpolated Value from Logarithmic:", linear_interpolated_value)
 
 
 # main block
