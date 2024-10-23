@@ -42,9 +42,9 @@ class Interpolator:
     # method to create an akima-type interpolation of the interpolated energy
     def log_akima_interpolation(self, log_energy, log_values, log_interpolated_energy):
         """Interpolate the value at the given energy point using Akima interpolation."""
-        akima_interpolator = Akima1DInterpolator(log_energy, log_values)
-        log_interpolated_value_akima = akima_interpolator(log_interpolated_energy)
-        return log_interpolated_value_akima
+        akima_interpolator = Akima1DInterpolator(self.log_energy, self.log_values)
+        self.interpolated_value = akima_interpolator(self.log_interpolated_energy)
+        return self.interpolated_value
     @staticmethod
     def log_to_value(self,log_energy, log_values,log_interpolated_value):  # function to return values from logarithmic to int
        """transforms values from logarithmic scale to lineal"""
