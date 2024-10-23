@@ -49,8 +49,7 @@ class Interpolator:
     def log_to_value(self,log_energy, log_values,log_interpolated_value):  # function to return values from logarithmic to int
        """transforms values from logarithmic scale to lineal"""
        interpolated_value = exp(log_interpolated_value)
-       interpolated_value_akima = exp(log_interpolated_value_akima)
-       return lineal_energy, lineal_values, lineal_interpolated_value
+       return interpolated_value
 
 
 def main():
