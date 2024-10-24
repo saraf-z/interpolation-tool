@@ -7,13 +7,13 @@ from scipy.interpolate import Akima1DInterpolator
 from math import log, exp
 from openpyxl import load_workbook
 
-from interpolation_script import energy
 
 #load Excel spreadsheet
 #convert data from spreadsheet into energy, and values
 #clean data
 
 def read_csv_file (file_path_csv):
+    """ This function reads a CSV file using pandas and returns the DataFrame."""
     file_path_csv = r'n60.csv'  # csv file path created
     try:
         df =pd.read_csv(file_path_csv)
@@ -21,15 +21,37 @@ def read_csv_file (file_path_csv):
     except FileNotFoundError:
         print(f"Error: The file {file_path_csv} was not found.")
         return None
+print(read_csv_file('n60.csv'))
 
+def clean_data (df): #reads the rows, identifies irrelevant data and deletes said data
+    """This function cleans unused data by removing rows where the value us less than or equal to 0 """
+
+    #Initialize lists to hold clean values
+    clean_energies = []
+    clean_values = []
+    #Extrae columnas 'Energy[keV]' y 'Fluence_rate [cm^-2s^-1]' del DataFrame
+    energy =df['Energy[keV]']
+    values = df['Fluence_rate [cm^-2s^-1]']
+
+    #Itera sobre ambas columnas simultaneamente
+    for i, j in zip (energy, values):
+        if j>0:#solo si el valor es mayor que j
+            clean_energies.append(i)
+            clean_values.append(j)
+        else:
+            pass
+        # print(clean_energies)
+        print(0 in clean_values)
+        print(len(clean_energies) == len(clean_values))
+        return pd.DataFrame({'clean_energies': clean_energies, 'clean_values': clean_values})
 
 
 
 # Logarithmic transformation: calculate logarithmic values of energy and values
-def take_logarithm(energy, values, interpolated_energy):
+def take_logarithm(clean_energies, clean_values, interpolated_energy):
     """Calculate the logarithm of a set of values."""
-    log_energy = [log(i) for i in energy]
-    log_values = [log(e) for e in values]
+    log_energy = [log(i) for i in clean_energies]
+    log_values = [log(e) for e in clean_values]
     log_interpolated_energy = log(interpolated_energy)
     return log_energy, log_values, log_interpolated_energy
 
@@ -93,13 +115,8 @@ def main():
     # # values_input = input()
     #
     # # Step 2: Get input for the interpolated energy value
-    # print('Introduce interpolated energy (a single number, e.g., "1.5"):')
-    # interpolated_energy = float(input())  # Convert the user input to a float
-    #
-    # # Convert input strings to lists of floats
-    # energy = [float(i.strip()) for i in energy_input.split(',')]
-    # values = [float(i.strip()) for i in values_input.split(',')]
-    #
+    print('Introduce interpolated energy (a single number, e.g., "1.5"):')
+    interpolated_energy = float(input())  # Convert the user input to a float
     # # Step 3: Perform the logarithmic transformation
     # log_energy, log_values, log_interpolated_energy = take_logarithm(energy, values, interpolated_energy)
     #
