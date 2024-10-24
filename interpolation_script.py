@@ -7,12 +7,11 @@ from openpyxl import load_workbook
 import csv
 import pandas as pd
 
+#Option used: read csv file with pandas
 print('Script interpolator_script.py')
-
 # Input data: from csv file
 file_path_excel = r"C:\Users\VPECOS\Desktop\documentos sara\PRACTICAS\DOCUMENTACION\N60.xlsx"
 file_path_csv = r'n60.csv'# csv file path created
-
 df_excel = pd.read_excel(file_path_excel)#call to excel file
 print(df_excel.head)
 
