@@ -55,6 +55,8 @@ def take_logarithm(clean_energies, clean_values, interpolated_energy):
     log_interpolated_energy = log(interpolated_energy)
     return log_energy, log_values, log_interpolated_energy
 
+#function to select interpolation
+
 
 # Interpolate lineal: takes values: energy, values and interpolated energy, returns interpolated value with the solution
 def log_linear_interpolation(log_energy, log_values, log_interpolated_energy):
@@ -74,6 +76,7 @@ def log_to_value(log_interpolated_value, log_interpolated_value_akima): #functio
     interpolated_value = math.exp(log_interpolated_value)
     interpolated_value_akima = math.exp(log_interpolated_value_akima)
     return interpolated_value, interpolated_value_akima
+#function to visualize interpolation.
 
 def main():
     print('Script interpolator_functions.py')
@@ -134,6 +137,10 @@ def main():
     # print(f'Interpolated Value (Akima): {interpolated_value_akima}')
     #
     #
+
+
+
+
 
 # main block
 
