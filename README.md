@@ -45,7 +45,9 @@ Here, functions from the main script are separated and structured.
 On this file, functions get structured into classes and methods for OOP.
   
 
-
+# interpolation script: 
+¿ what does this code do ? 
+This code starts by importing necesary libraries, 
 
 
 
