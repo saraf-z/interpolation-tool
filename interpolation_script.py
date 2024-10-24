@@ -14,50 +14,14 @@ file_path_excel = r"C:\Users\VPECOS\Desktop\documentos sara\PRACTICAS\DOCUMENTAC
 file_path_csv = r'n60.csv'# csv file path created
 df_excel = pd.read_excel(file_path_excel)#call to excel file
 print(df_excel.head)
-
-# Option 2: using pandas
 df = pd.read_csv(file_path_csv)
 # print(df.head())
 # print(type(df['Energy[keV]']))
 # print(df['Fluence_rate [cm^-2s^-1]'])
 column1 = list(df['Energy[keV]'])
 column2 = list(df['Fluence_rate [cm^-2s^-1]'])
-# print(column1)
-# print(column2)
 
-# Option 1: parsing csv file as a text file
-# with open(file_path, mode='r') as file:
-    # energy, values = [], []
-    # for row in file:
-    #     print(str(row))
-    #     line = row.strip('\n').split(';')
-    #     print(line)
-    #     print(line[0])
-    #     print(line[1])
-    #     energy.append(float(line[0]))
-    #     values.append(float(line[1]))
-    #     print(energy)
-    #     print(values)
-
-    #content = file.read()
-    #print(content)
-    #print(type(content))
-    #listas vacias para las columnas
-    # columna1 = []
-    #columna2 = []
-    #recorrer el archivo CSV fila por fila
-
-    # print(content[0])
-    #for row in content :
-        #print(row.split(';'))
-        #pass
-        # print(row)
-        # columna1.append(row['Energy[keV]'])
-        #columna2.append(row['Fluence_rate [cm^-2s^-1]'])
-    #print("columna1:", columna1)
-    #print("columna2:",columna2)
-
-# Input data: define some dummy data to test the script
+# testing the script
 energy = column1  # Energy values of the distribution
 values = column2  # Variable values of the distribution
 interpolated_energy = 20.9  # Energy value to interpolate
