@@ -1,9 +1,30 @@
 import math
 import numpy as np
+import pandas as pd
 from scipy.interpolate import Akima1DInterpolator
 from math import log, exp
+from openpyxl import load_workbook
 
+from interpolation_script import energy
 
+#load Excel spreadsheet
+#convert data from spreadsheet into energy, and values
+#clean data
+file_path_excel = r"C:\Users\VPECOS\Desktop\documentos sara\PRACTICAS\DOCUMENTACION\N60.xlsx"
+
+def load_excel (file_path_excel):
+    file_path_excel = r"C:\Users\VPECOS\Desktop\documentos sara\PRACTICAS\DOCUMENTACION\N60.xlsx"
+    file_path_csv = r'n60.csv'  # csv file path created
+
+    df_excel = pd.read_excel(file_path_excel)  # call to excel file
+    print(df_excel.head)
+    df = pd.read_csv(file_path_csv)
+    column1 = list(df['Energy[keV]'])
+    column2 = list(df['Fluence_rate [cm^-2s^-1]'])
+    return column1, column2
+
+column1 = energy
+column2 = values
 
 # Logarithmic transformation: calculate logarithmic values of energy and values
 def take_logarithm(energy, values, interpolated_energy):
@@ -63,11 +84,11 @@ def main():
 def cli():
     # Command Line Interface to get input from the user
     # Step 1: Get input for energy and values from the user
-    print('Introduce data for energy (comma-separated, e.g., "1, 2, 3"), then press enter:')
-    energy_input = input()
-
-    print('Introduce data for values (comma-separated, e.g., "10, 20, 30"), then press enter:')
-    values_input = input()
+    # print('Introduce data for energy (comma-separated, e.g., "1, 2, 3"), then press enter:')
+    # energy_input = input()
+    #
+    # print('Introduce data for values (comma-separated, e.g., "10, 20, 30"), then press enter:')
+    # values_input = input()
 
     # Step 2: Get input for the interpolated energy value
     print('Introduce interpolated energy (a single number, e.g., "1.5"):')
