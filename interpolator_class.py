@@ -1,7 +1,7 @@
-
 from math import log, exp
 import numpy as np
 from scipy.interpolate import Akima1DInterpolator
+
 
 # interpolator class
 class Interpolator:
@@ -14,48 +14,52 @@ class Interpolator:
         self._log_energy = None
         self._log_values = None
         self._log_interpolated_energy = None
+        self._log_interpolated_value = None
 
         self.interpolated_value = None
 
+        # select data frame path, clean file (atributes = cleanvalues)
 
         # method to transform initial values into logarithmic data
-    def take_logarithm(self):
-        log_energy = [log(i) for i in self.energy]
-        log_values = [log(i) for i in self.values]
-        log_interpolated_energy = log(self.interpolated_energy)
-        return log_energy, log_values, log_interpolated_energy
 
-    def take_logarithm_(self):
-        self.log_energy = [log(i) for i in self.energy]
-        self.log_values = [log(i) for i in self.values]
-        self.log_interpolated_energy = log(self.interpolated_energy)
+    def take_logarithm(self):
+        self._log_energy = [log(i) for i in self.energy]
+        self._log_values = [log(i) for i in self.values]
+        self._log_interpolated_energy = log(self.interpolated_energy)
 
     # method to create a lineal interpolation of the interpolated energy using "values" and "energy"
     def log_linear_interpolation(self):
         """Interpolate the value at the given energy point."""
-        if self.log_energy is None or self.log_values is None:
-            self.take_logarithm()
-        self.interpolated_value = np.interp(self.log_interpolated_energy, self.log_energy, self.log_values)
+        # if self._log_energy is None or self._log_values is None:
+        #     self.take_logarithm() #call to clean data
+        self.take_logarithm()
+        self._log_interpolated_value = np.interp(self._log_interpolated_energy, self._log_energy, self._log_values)
+        self.log_to_value()
         return self.interpolated_value
 
     # method to create an akima-type interpolation of the interpolated energy
     def log_akima_interpolation(self):
         """Interpolate the value at the given energy point using Akima interpolation."""
-        if self.log_energy is None or self.log_values is None:
-          self.take_logarithm_()
-        akima_interpolator = Akima1DInterpolator (self.log_energy, self.log_values)
-        self.interpolated_value = akima_interpolator(self.log_interpolated_energy)
+        self.take_logarithm()  # call to clean data
+        akima_interpolator = Akima1DInterpolator(self._log_energy, self._log_values)
+        self._log_interpolated_value = akima_interpolator(self._log_interpolated_energy)
+        self.log_to_value()
         return self.interpolated_value
 
-    @staticmethod
-    def log_to_value(log_interpolated_value):  # function to return values from logarithmic to int
-       """transforms values from logarithmic scale to lineal"""
-       #interpolated_value = exp(log_interpolated_value)
-       return exp(log_interpolated_value)
+    def log_to_value(self):  # function to return values from logarithmic to int
+        """transforms values from logarithmic scale to lineal"""
+        # interpolated_value = exp(log_interpolated_value)
+        self.interpolated_value = exp(self._log_interpolated_value)
+        return self.interpolated_value
 
+
+# function def_read_spectrum_from_file : read path is csv - boolean true/false
+#inside interpolation method cleaning files must be included!
 
 def main():
     print('Script interpolator_class.py')
+    # define paths . calll read spectrum
+    # select paths
 
     # Input data: define some dummy data to test the script
     energy = [1, 2, 3]  # Energy values of the distribution
@@ -64,6 +68,7 @@ def main():
 
     # Create an instance of class Interpolator
     interpolator = Interpolator(energy, values, interpolated_energy)
+
     # Perform linear interpolation
     linear_value = interpolator.log_linear_interpolation()
     print("Linear Interpolation:", linear_value)
@@ -71,10 +76,6 @@ def main():
     # Perform Akima interpolation
     akima_value = interpolator.log_akima_interpolation()
     print("Akima Interpolation:", akima_value)
-
-    # Convert the interpolated logarithmic value to linear scale
-    linear_interpolated_value = Interpolator.log_to_value(log(linear_value))
-    print("Linear Interpolated Value from Logarithmic:", linear_interpolated_value)
 
 
 # main block
