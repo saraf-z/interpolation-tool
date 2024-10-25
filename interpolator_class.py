@@ -6,6 +6,7 @@ from scipy.interpolate import Akima1DInterpolator
 # interpolator class
 class Interpolator:
     # constructor to initialize attributes
+    #atributes store static data that is not visible to the user.
     def __init__(self, energy, values, interpolated_energy):
         self.energy = energy
         self.values = values
@@ -17,6 +18,8 @@ class Interpolator:
         self._log_interpolated_value = None
 
         self.interpolated_value = None
+
+        #
 
         # select data frame path, clean file (atributes = cleanvalues)
 
