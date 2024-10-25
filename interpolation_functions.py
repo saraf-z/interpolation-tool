@@ -7,6 +7,8 @@ from scipy.interpolate import Akima1DInterpolator
 from math import log, exp
 from openpyxl import load_workbook
 
+from interpolation_script import log_energy, log_values
+
 
 #load Excel spreadsheet
 #convert data from spreadsheet into energy, and values
@@ -94,34 +96,45 @@ def log_to_value(log_interpolated_value, log_interpolated_value_akima): #functio
 
 #function to visualize interpolation.
 
+
 def main():
     print('Script interpolator_functions.py')
-    file_path_csv = r'n60.csv'
-    result = read_csv_file(file_path_csv)
+    # Contains main flow of the program
+    #what is the main flow of the program?
+    #Step1: Read file
+    file_path = 'n60.csv'
+    df= read_csv_file(file_path)
+    #step2: clean data
+    if df is not None:
+        print("Csv file read, cleaning data...")
+        clean_df = clean_data(df)
+        print ("Clean data update:")
+        print(clean_df)
+    else:
+        print (" unable to read csv file.")
+    #Step 3: ask user for the value of the interpolated_energy to start converting the numbers for the interpolations
+    while True:
+        try:
+            interpolated_energy = float(input("Enter the energy point you want to interpolate in a range of 20.0 to 400: "))
+            if interpolated_energy <= 0: #interpolated energy must be 20 or higher
+                print("Invalid input, interpolated energy must be greater than 20 try again")
+            else:
+                break
+        except ValueError:
+            print("Invalid input, enter a numeric value")
 
-    # Input data: define some dummy data to test the script
-    # energy = [1, 2, 3]  # Energy values of the distribution
-    # values = [10, 20, 30]  # Variable values of the distribution
-    # interpolated_energy = 1.5  # Energy value to interpolate
-    #take logarithms of the data
-    # log_energy, log_values, log_interpolated_energy = take_logarithm(energy, values, interpolated_energy)
-    # #log-linear
-    # log_interpolated_value = log_linear_interpolation(log_energy, log_values, log_interpolated_energy)
-    # #log-akima
-    # log_interpolated_value_akima = log_akima_interpolation(log_energy, log_values, log_interpolated_energy)
-    # #convert to normal values
-    # interpolated_value, interpolated_value_akima = log_to_value(log_interpolated_value, log_interpolated_value_akima)
-    #
-    # print(f'Energy: {energy}')  #prints values of variables used in functions
-    # print(f'Values:{values}')
-    # print(f'Interpolated_energy:{ interpolated_energy }')
-    # print(f'log_energy:{log_energy}')
-    # print(f'log_values:{log_values}')
-    # print(f'log_interpolated_energy:{log_interpolated_energy}')
-    # print(f'log_interpolated_value:{log_interpolated_value}')
-    # print(f'log_interpolated_value_akima{log_interpolated_value_akima}')
-    # print(f'Interpolated value: {interpolated_value}')
-    # print(f'Interpolated_value (Akima):{interpolated_value_akima}')
+    #Once a valid interpolated energy is obtained take_logarithm is called using clean_energies, clean_values and interpolated_energy
+    #Step 4: Call the take_logarithm function with user input and example
+
+    clean_energies = clean_df['Energy[keV]']
+    clean_values = clean_df['Fluence_rate [cm^-2s^-1]']
+
+    log_energy, log_values, log_interpolated_energy = take_logarithm(clean_energies,clean_values, interpolated_energy)
+    print("logarithmic values:" ,log_energy, log_values, log_interpolated_energy)
+
+
+
+
 
 
  #def cli():
@@ -134,7 +147,7 @@ def main():
     # # values_input = input()
     #
     # # Step 2: Get input for the interpolated energy value
-    print('Introduce interpolated energy (a single number, e.g., "1.5"):')
+    print('Introduce interpolated energy (a single number from 20.0 to 400, e.g., "22.3"):')
     interpolated_energy = float(input())  # Convert the user input to a float
     # # Step 3: Perform the logarithmic transformation
     # log_energy, log_values, log_interpolated_energy = take_logarithm(energy, values, interpolated_energy)
