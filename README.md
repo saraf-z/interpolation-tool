@@ -47,7 +47,35 @@ On this file, functions get structured into classes and methods for OOP.
 
 # interpolation script: 
 ¿ what does this code do ? 
-This code starts by importing necesary libraries, 
+1- Imports necesary libraries.
+2-Read Excel/csv file
+3- Holds data from excel file into columns 
+4- Cleans data to discard unnecesary information
+5- Transforms clean data into logarithms 
+6- Takes logarithmic value and interpolates it 
+7- Transforms log values into exp values 
+8 - Prints the result fo said values 
+
+# Interpolation functions: 
+¿ What does this code do?
+
+1- import necesary libraries
+2- reads csv file
+3- Cleans data from file
+4- Transforms numbers from exponential escale to logarithmic scale
+5- Has a function that creates linear interpolations 
+6- Has a function that creates Akima interpolations
+7- Has a function that transforms from log to exp 
+8- Uses main() function to initialize functions
+9-Cli function: console to ask user for the data it seeks to interpolate.
+
+Inside the Cli() function, there are the following commands: 
+1. ask the user to select the interpolation type 
+2. ask the user the data variable that needs to be interpolated
+3. (invisible):
+   call the functions: read_csv_file, clean_data, take_logarithm, select interpolation
+   call the functions: log_linear/ akima,
+   then: log_to_value and show_graph 
 
 
 
