@@ -45,8 +45,6 @@ def clean_data (df): #reads the rows, identifies irrelevant data and deletes sai
         print(len(clean_energies) == len(clean_values))
         return pd.DataFrame({'clean_energies': clean_energies, 'clean_values': clean_values})
 
-
-
 # Logarithmic transformation: calculate logarithmic values of energy and values
 def take_logarithm(clean_energies, clean_values, interpolated_energy):
     """Calculate the logarithm of a set of values."""
@@ -55,8 +53,25 @@ def take_logarithm(clean_energies, clean_values, interpolated_energy):
     log_interpolated_energy = log(interpolated_energy)
     return log_energy, log_values, log_interpolated_energy
 
-#function to select interpolation
-
+#function to select interpolation method
+def select_interpolation():
+    options = {
+        1:"lineal",
+        2:"Akima"
+    }
+    print("Select interpolation method")
+    for key, value in options.items():
+        print(f"{key}, {value}")
+    while True:
+        try:
+            selected_method = int(input("Select method: "))
+            if selected_method in options:
+                print(f"Selected method [selected_method]")
+                return options[selected_method]
+            else:
+                print("Unavailable method, try again")
+        except ValueError:
+            print("Invalid input, try again")
 
 # Interpolate lineal: takes values: energy, values and interpolated energy, returns interpolated value with the solution
 def log_linear_interpolation(log_energy, log_values, log_interpolated_energy):
@@ -76,6 +91,7 @@ def log_to_value(log_interpolated_value, log_interpolated_value_akima): #functio
     interpolated_value = math.exp(log_interpolated_value)
     interpolated_value_akima = math.exp(log_interpolated_value_akima)
     return interpolated_value, interpolated_value_akima
+
 #function to visualize interpolation.
 
 def main():
