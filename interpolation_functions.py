@@ -104,6 +104,25 @@ def main():
     #Step1: Read file
     file_path = 'n60.csv'
     df= read_csv_file(file_path)
+    #comprobar nombres
+
+    try:
+        clean_df = pd.read_csv(file_path)  # Cambia por la ruta de tu archivo
+    except FileNotFoundError:
+        print("Error: No se encontró el archivo de datos.")
+        return
+
+        # Verifica las columnas del DataFrame
+    print("Columnas en el DataFrame:", clean_df.columns)
+
+    # Prueba acceder a la columna 'Energy[keV]'
+    try:
+        clean_energies = clean_df['Energy[keV]']
+    except KeyError:
+        print("Error: La columna 'Energy[keV]' no existe. Verifica el nombre de la columna.")
+        return  # Detiene la ejecución si no se encuentra la columna
+
+
     #step2: clean data
     if df is not None:
         print("Csv file read, cleaning data...")
@@ -112,7 +131,14 @@ def main():
         print(clean_df)
     else:
         print (" unable to read csv file.")
+
+
+
+
+
     #Step 3: ask user for the value of the interpolated_energy to start converting the numbers for the interpolations
+
+
     while True:
         try:
             interpolated_energy = float(input("Enter the energy point you want to interpolate in a range of 20.0 to 400: "))
@@ -129,8 +155,18 @@ def main():
     clean_energies = clean_df['Energy[keV]']
     clean_values = clean_df['Fluence_rate [cm^-2s^-1]']
 
-    log_energy, log_values, log_interpolated_energy = take_logarithm(clean_energies,clean_values, interpolated_energy)
-    print("logarithmic values:" ,log_energy, log_values, log_interpolated_energy)
+
+    # Step 5: logarithm of the values
+    log_energy, log_values, log_interpolated_energy = take_logarithm(clean_energies, clean_values, interpolated_energy)
+    print("Logarithmic values:", log_energy, log_values, log_interpolated_energy)
+
+    # Step 6: Logarithmic Interpolation
+    interpolator = interp1d(log_energy, log_values, kind='linear', fill_value='extrapolate')
+    interpolated_log_value = interpolator(log_interpolated_energy)
+
+    # Step 7: Convert to exp
+    interpolated_value = np.exp(interpolated_log_value)
+    print(f"Interpolated value for energy {interpolated_energy} keV is approximately {interpolated_value}")
 
 
 
