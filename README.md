@@ -77,5 +77,9 @@ Inside the Cli() function, there are the following commands:
    call the functions: log_linear/ akima,
    then: log_to_value and show_graph 
 
+# What is in the Script? 
 
+1. Imports and set ups:
+
+interpolation_script.py:4
 
