@@ -81,5 +81,11 @@ Inside the Cli() function, there are the following commands:
 
 1. Imports and set ups:
 
-interpolation_script.py:4
+2. pd.FUNCTIONS to upload csv, read and organize into two lists. Test that the information is correct and then functions to print the results
+3. .append functions to clean data in the lists
+4. Logarithmic transformation. with .log function
+5. Lineal Interpolation (in log)
+6. Akima Interpolation (in log)
+7. Reversar la transformacion logaritmica
+8. Mostrar los resultados de la operacion por pantalla
 
