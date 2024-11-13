@@ -2,7 +2,7 @@
 # Modeling steps: script, functional programing and OOP programing
 from math import log, exp
 import numpy as np
-from scipy.interpolate import Akima1DInterpolator
+from scipy.interpolate import Akima1DInterpolator, interp1d
 from openpyxl import load_workbook
 import csv
 import pandas as pd
@@ -55,21 +55,58 @@ print (f'log_energy: {log_energy}')
 print (f'log_values: {log_values}')
 print (f'log_interpolated_energy: {log_interpolated_energy}')
 
+#Ask user for interpolation:
+##3. ask user for type of interpolation
+print("Select the interpolation type:")
+print("1 - Linear")
+print("2 - Quadratic")
+print("3 - Cubic")
+print("4 - Akima")
+interpolation_type = input("Enter the number corresponding to the interpolation type: ")
+try:
+    if interpolation_type == '1':
+        interp_function = interp1d(column1, column2, kind='linear')
+        print("Linear interpolation selected.")
+        log_interpolated_value = np.interp(log_interpolated_energy, log_energy, log_values)
+        interpolated_value = exp(log_interpolated_value)
+        print("Interpolated log value:", log_interpolated_value, "Exponential value:", interpolated_value)
+
+    elif interpolation_type == '2':
+        interp_function = interp1d(column1, column2, kind='quadratic')
+        print("Quadratic interpolation selected.")
+        print("")
+    elif interpolation_type == '3':
+        interp_function = interp1d(column1, column2, kind='cubic')
+        print("Cubic interpolation selected.")
+    elif interpolation_type == '4':
+        interp_function = interp1d(column1, column2, kind='Akima')
+        print("Akima interpolation selected.")
+        akima_interpolator = Akima1DInterpolator(log_energy, log_values)  # get energy and values as args for the Akima1D function
+        log_interpolated_value_akima = akima_interpolator(log_interpolated_energy)  # shows in result the result of the Akima1D interpolation
+        interpolated_value_akima = exp(log_interpolated_value_akima)
+        print("Interpolated log value:", log_interpolated_value_akima, "Exponential value:",interpolated_value_akima )
+    else:
+        print("Invalid selection. Please enter 1, 2, 3 or 4")
+        exit()
+except Exception as e:
+    print(f"An error occurred: {e}")
+
 # Interpolate lineal
-log_interpolated_value = np.interp(log_interpolated_energy, log_energy,log_values)# get interpolated_energy, energy and values as arguments for the np.interp function
+
+#log_interpolated_value = np.interp(log_interpolated_energy, log_energy,log_values)# get interpolated_energy, energy and values as arguments for the np.interp function
 #Akima interpolation
-akima_interpolator = Akima1DInterpolator(log_energy, log_values)#get energy and values as args for the Akima1D function
-log_interpolated_value_akima = akima_interpolator(log_interpolated_energy) #shows in result the result of the Akima1D interpolation
+#akima_interpolator = Akima1DInterpolator(log_energy, log_values)#get energy and values as args for the Akima1D function
+#log_interpolated_value_akima = akima_interpolator(log_interpolated_energy) #shows in result the result of the Akima1D interpolation
 
 #print results
-print (f'log_interpolated_value: {log_interpolated_value}')
-print (f'log_interpolated_value_akima: {log_interpolated_value_akima}')
+#print (f'log_interpolated_value: {log_interpolated_value}')
+#print (f'log_interpolated_value_akima: {log_interpolated_value_akima}')
 
 # inverse logarithmic transformation.
 #interpolated_energy
-interpolated_value = exp(log_interpolated_value)
-interpolated_value_akima = exp(log_interpolated_value_akima)
+#interpolated_value = exp(log_interpolated_value)
+#interpolated_value_akima = exp(log_interpolated_value_akima)
 
 # Print results
-print (f'Interpolated value: {interpolated_energy}: {interpolated_value}')
-print (f'Interpolated value (Akima) {interpolated_energy}: {interpolated_value_akima}')
+#print (f'Interpolated value: {interpolated_energy}: {interpolated_value}')
+#print (f'Interpolated value (Akima) {interpolated_energy}: {interpolated_value_akima}')
