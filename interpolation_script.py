@@ -74,10 +74,17 @@ try:
     elif interpolation_type == '2':
         interp_function = interp1d(column1, column2, kind='quadratic')
         print("Quadratic interpolation selected.")
-        print("")
+        log_interpolated_value_quadratic = np.interp(log_interpolated_energy, log_energy, log_values)
+        interpolated_value_quadratic = exp(log_interpolated_value_quadratic)
+        print("Interpolated log value:", log_interpolated_value_quadratic, "Exponential value:", interpolated_value_quadratic)
+
     elif interpolation_type == '3':
         interp_function = interp1d(column1, column2, kind='cubic')
         print("Cubic interpolation selected.")
+        log_interpolated_value_cubic = np.interp(log_interpolated_energy, log_energy, log_values)
+        interpolated_value_cubic = exp(log_interpolated_value_cubic)
+        print("Interpolated log value:", log_interpolated_value_cubic, "Exponential value:",interpolated_value_cubic)
+
     elif interpolation_type == '4':
         interp_function = interp1d(column1, column2, kind='Akima')
         print("Akima interpolation selected.")
