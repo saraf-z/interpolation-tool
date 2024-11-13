@@ -2,6 +2,7 @@
 # Modeling steps: script, functional programing and OOP programing
 from math import log, exp
 import numpy as np
+from matplotlib import pyplot as plt
 from scipy.interpolate import Akima1DInterpolator, interp1d
 from openpyxl import load_workbook
 import csv
@@ -70,6 +71,18 @@ try:
         log_interpolated_value = np.interp(log_interpolated_energy, log_energy, log_values)
         interpolated_value = exp(log_interpolated_value)
         print("Interpolated log value:", log_interpolated_value, "Exponential value:", interpolated_value)
+        #plotting
+        plt.figure(figsize=(8, 6))
+        plt.plot(log_energy, log_values, 'o', label='Data points', color='blue')
+        plt.plot(log_interpolated_energy, log_interpolated_value, 'ro',
+                 label=f'Exp Interpolated value ({log_interpolated_value:.2f})')
+        plt.plot(log_energy, interp_function(log_energy), '-', color='gray', label='Linear Interpolation (log scale')
+        plt.xlabel("log_energy")
+        plt.ylabel("log_values")
+        plt.title("Exponential Linear Interpolation with Graph")
+        plt.legend()
+        plt.grid(True)
+        plt.show()
 
     elif interpolation_type == '2':
         interp_function = interp1d(column1, column2, kind='quadratic')
@@ -86,7 +99,7 @@ try:
         print("Interpolated log value:", log_interpolated_value_cubic, "Exponential value:",interpolated_value_cubic)
 
     elif interpolation_type == '4':
-        interp_function = interp1d(column1, column2, kind='Akima')
+        interp_function = Akima1DInterpolator(column1, column2)
         print("Akima interpolation selected.")
         akima_interpolator = Akima1DInterpolator(log_energy, log_values)  # get energy and values as args for the Akima1D function
         log_interpolated_value_akima = akima_interpolator(log_interpolated_energy)  # shows in result the result of the Akima1D interpolation
@@ -98,22 +111,4 @@ try:
 except Exception as e:
     print(f"An error occurred: {e}")
 
-# Interpolate lineal
-
-#log_interpolated_value = np.interp(log_interpolated_energy, log_energy,log_values)# get interpolated_energy, energy and values as arguments for the np.interp function
-#Akima interpolation
-#akima_interpolator = Akima1DInterpolator(log_energy, log_values)#get energy and values as args for the Akima1D function
-#log_interpolated_value_akima = akima_interpolator(log_interpolated_energy) #shows in result the result of the Akima1D interpolation
-
-#print results
-#print (f'log_interpolated_value: {log_interpolated_value}')
-#print (f'log_interpolated_value_akima: {log_interpolated_value_akima}')
-
-# inverse logarithmic transformation.
-#interpolated_energy
-#interpolated_value = exp(log_interpolated_value)
-#interpolated_value_akima = exp(log_interpolated_value_akima)
-
-# Print results
-#print (f'Interpolated value: {interpolated_energy}: {interpolated_value}')
-#print (f'Interpolated value (Akima) {interpolated_energy}: {interpolated_value_akima}')
+#
