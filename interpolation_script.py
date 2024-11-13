@@ -73,10 +73,10 @@ try:
         print("Interpolated log value:", log_interpolated_value, "Exponential value:", interpolated_value)
         #plotting
         plt.figure(figsize=(8, 6))
-        plt.plot(log_energy, log_values, 'o', label='Data points', color='blue')
-        plt.plot(log_interpolated_energy, log_interpolated_value, 'ro',
-                 label=f'Exp Interpolated value ({log_interpolated_value:.2f})')
-        plt.plot(log_energy, interp_function(log_energy), '-', color='gray', label='Linear Interpolation (log scale')
+        plt.plot(energy, values, 'o', label='Data points', color='blue')
+        plt.plot(interpolated_energy, interpolated_value, 'ro',
+                 label=f'Exp Interpolated value ({interpolated_value:.2f})')
+        plt.plot(energy, interp_function(energy), '-', color='gray', label='Linear Interpolation (log scale')
         plt.xlabel("log_energy")
         plt.ylabel("log_values")
         plt.title("Exponential Linear Interpolation with Graph")
@@ -90,6 +90,18 @@ try:
         log_interpolated_value_quadratic = np.interp(log_interpolated_energy, log_energy, log_values)
         interpolated_value_quadratic = exp(log_interpolated_value_quadratic)
         print("Interpolated log value:", log_interpolated_value_quadratic, "Exponential value:", interpolated_value_quadratic)
+        # plotting
+        plt.figure(figsize=(8, 6))
+        plt.plot(energy, values, 'o', label='Data points', color='blue')
+        plt.plot(interpolated_energy, interpolated_value_quadratic, 'ro',
+                 label=f'Exp Interpolated value ({interpolated_value_quadratic:.2f})')
+        plt.plot(energy, interp_function(energy), '-', color='gray', label='Linear Interpolation (log scale')
+        plt.xlabel("log_energy")
+        plt.ylabel("log_values")
+        plt.title("Exponential Linear Interpolation with Graph")
+        plt.legend()
+        plt.grid(True)
+        plt.show()
 
     elif interpolation_type == '3':
         interp_function = interp1d(column1, column2, kind='cubic')
@@ -97,14 +109,38 @@ try:
         log_interpolated_value_cubic = np.interp(log_interpolated_energy, log_energy, log_values)
         interpolated_value_cubic = exp(log_interpolated_value_cubic)
         print("Interpolated log value:", log_interpolated_value_cubic, "Exponential value:",interpolated_value_cubic)
+        plt.figure(figsize=(8, 6))
+        plt.plot(energy, values, 'o', label='Data points', color='blue')
+        plt.plot(interpolated_energy, interpolated_value_cubic, 'ro',
+                 label=f'Exp Interpolated value ({interpolated_value_cubic:.2f})')
+        plt.plot(energy, interp_function(energy), '-', color='gray', label='Linear Interpolation (log scale')
+        plt.xlabel("log_energy")
+        plt.ylabel("log_values")
+        plt.title("Exponential Linear Interpolation with Graph")
+        plt.legend()
+        plt.grid(True)
+        plt.show()
 
     elif interpolation_type == '4':
         interp_function = Akima1DInterpolator(column1, column2)
         print("Akima interpolation selected.")
-        akima_interpolator = Akima1DInterpolator(log_energy, log_values)  # get energy and values as args for the Akima1D function
+        akima_interpolator = Akima1DInterpolator(column1, column2)  # get energy and values as args for the Akima1D function
         log_interpolated_value_akima = akima_interpolator(log_interpolated_energy)  # shows in result the result of the Akima1D interpolation
         interpolated_value_akima = exp(log_interpolated_value_akima)
-        print("Interpolated log value:", log_interpolated_value_akima, "Exponential value:",interpolated_value_akima )
+        #Plotting
+        plt.figure(figsize=(8, 6))
+        plt.plot(energy, values, 'o', label='Data points', color='blue')
+        plt.plot(interpolated_energy, interpolated_value_akima, 'ro',
+                 label=f'Exp Interpolated value ({interpolated_value_akima:.2f})')
+        plt.plot(energy, akima_interpolator(energy), '-', color='gray',label='Exponential Linear interpolation')
+        plt.xlabel("log_energy")
+        plt.ylabel("log_values")
+        plt.title("Exponential Linear Interpolation with Graph")
+        plt.legend()
+        plt.grid(True)
+        plt.show()
+
+
     else:
         print("Invalid selection. Please enter 1, 2, 3 or 4")
         exit()
