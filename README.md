@@ -5,9 +5,8 @@ Tool for the interpolation of logaritmic data
 
 The goal of the program is to 
 
-- INPUT: Read two different .xlsx files
+- INPUT: Read two different .xlsx files: the original data and the datato be interpolated.
 - Convert input: Extract data from these Excel files, and convert the data into variables. Take logs
-- INPUT: Read the data to be interpolated. Take log
 - Select interpolation technique: Allow the user to select the type of interpolation technique to be performed.
 - Action: performs the interpolation and reverts the logarithm with the exponential function.
 - OUTPUT: Shows the final interpolated data.
