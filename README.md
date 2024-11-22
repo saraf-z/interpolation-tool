@@ -5,25 +5,26 @@ Tool for the interpolation of logaritmic data
 
 The goal of the program is to 
 
-- Read two different .xlsx files
-- Extract data from said files, and convert the data into variables.
-- Save the data from said files and being capable of automating interpolations.
-- Allow the user to select what type of interpolation has to be done. 
-- Show the data selected.
+- INPUT: Read two different .xlsx files
+- Convert input: Extract data from these Excel files, and convert the data into variables. Take logs
+- INPUT: Read the data to be interpolated. Take log
+- Select interpolation technique: Allow the user to select the type of interpolation technique to be performed.
+- Action: performs the interpolation and reverts the logarithm with the exponential function.
+- OUTPUT: Shows the final interpolated data.
 
   Starting point:
 
-  The files of reference are two .xlsx files, each of them having two columns of data that need to be interpolated. These interpolations must be done in logarthmic scale then converted back to exponential.  
+  The input files are two .xlsx files, each of them having two columns of data in which the user needs the interpolation. These interpolations have to be performed with all the variables in logarithmic scale. After the interpolation will be converted back to exponential.  
 
 # Design Process:
 First, we divide the problem into different blocks
 
 1 First Block. Input
-The input of the data are two excel files, which could be converted into csv. This will be defined further into the making of the proyect. 
+The input of the data are two excel files, which could be converted into csv. This will be defined later. One Excel file contains the original data (x,y) and the other contains the data (xprime) we would like to get the interpolated function (yprime). 
 
 2 Second Block. Functions. 
 This is the part where the key functionalities of the program reside. 
-Here is where we will need to define all of the procedures from receiving the data, to transform the data into logarthmic scale, to then process the data as the user inputs, to then be processed, converted back to exponentials, and show back to the user via defined output. 
+Here is where the program converts the data into logarthmic scale, makes the interpolation and then uses exponential functions to return the output. 
 
 3 Third Block. Output. 
 The output format will be dependent of the processing needed for the input in the first block. 
