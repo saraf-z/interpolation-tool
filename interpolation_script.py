@@ -21,11 +21,12 @@ df = pd.read_csv(file_path_csv)
 # print(df['Fluence_rate [cm^-2s^-1]'])
 column1 = list(df['Energy[keV]'])
 column2 = list(df['Fluence_rate [cm^-2s^-1]'])
+column3 = list(df['valor_x'])
 
 # testing the script
 energy = column1  # Energy values of the distribution
 values = column2  # Variable values of the distribution
-interpolated_energy = 20.9  # Energy value to interpolate
+interpolated_energy = column3 # Energy value to interpolate
 
 #print results
 print(f'Energy: {energy}')
@@ -33,18 +34,20 @@ print (f'Values: {values}')
 print (f'interpolated_energy: {interpolated_energy}')
 
 # Clean data
-clean_energies, clean_values = [], []
-for i, j in zip(energy, values):
+clean_energies, clean_values, clean_interpolated_energy = [], [], []
+for i, j, z in zip(energy, values, interpolated_energy):
     # print('line', i, j)
     if j>0:
         clean_energies.append(i)
         clean_values.append(j)
+        clean_interpolated_energy.append(z)
+
     else:
         pass
 #print(clean_energies)
 print(0 in clean_values)
 print(len(clean_energies)==len(clean_values))
-
+print(len(clean_energies)==len(clean_values))
 # Logarithmic transformation: calculate logarithmic values of energy and values
 log_energy = [log(i) for i in clean_energies]
 log_values = [log(i) if i>0 else None for i in clean_values]
@@ -63,6 +66,7 @@ print("1 - Linear")
 print("2 - Quadratic")
 print("3 - Cubic")
 print("4 - Akima")
+print("5 - Lagrange")
 interpolation_type = input("Enter the number corresponding to the interpolation type: ")
 try:
     if interpolation_type == '1':
@@ -96,8 +100,8 @@ try:
         plt.plot(interpolated_energy, interpolated_value_quadratic, 'ro',
                  label=f'Exp Interpolated value ({interpolated_value_quadratic:.2f})')
         plt.plot(energy, interp_function(energy), '-', color='gray', label='Linear Interpolation (log scale')
-        plt.xlabel("log_energy")
-        plt.ylabel("log_values")
+        plt.xlabel("Energy[keV]")
+        plt.ylabel("Fluence_rate [cm^-2s^-1]")
         plt.title("Exponential Linear Interpolation with Graph")
         plt.legend()
         plt.grid(True)
@@ -140,6 +144,24 @@ try:
         plt.grid(True)
         plt.show()
 
+    elif interpolation_type == '5':
+        print("Lagrange interpolation selected.")
+        interpolated_results = []
+        for x_interp in clean_interpolated_energy:
+            interpolated_value = lagrange_interpolation(x_interp, clean_energies, clean_values)
+            interpolated_results.append(interpolated_value)
+            print(f"Interpolated value for {x_interp}: {interpolated_value}")
+
+        # Plotting
+        plt.figure(figsize=(8, 6))
+        plt.plot(clean_energies, clean_values, 'o', label='Data points', color='blue')
+        plt.plot(clean_interpolated_energy, interpolated_results, 'ro', label='Interpolated values (Lagrange)')
+        plt.xlabel("Energy [keV]")
+        plt.ylabel("Fluence_rate [cm^-2s^-1]")
+        plt.title("Lagrange Interpolation")
+        plt.legend()
+        plt.grid(True)
+        plt.show()
 
     else:
         print("Invalid selection. Please enter 1, 2, 3 or 4")
