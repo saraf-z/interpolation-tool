@@ -3,17 +3,17 @@
 from math import log, exp
 import numpy as np
 from matplotlib import pyplot as plt
-from scipy.interpolate import Akima1DInterpolator, interp1d
-from openpyxl import load_workbook
+from scipy.interpolate import Akima1DInterpolator, interp1d, lagrange
 import csv
 import pandas as pd
+import openpyxl
 
 #Option used: read csv file with pandas
 print('Script interpolator_script.py')
 # Input data: from csv file
 file_path_excel = r"C:\Users\VPECOS\Desktop\documentos sara\PRACTICAS\DOCUMENTACION\N60.xlsx"
 file_path_csv = r'n60.csv'# csv file path created
-df_excel = pd.read_excel(file_path_excel)#call to excel file
+df_excel = pd.read_excel(file_path_excel)#call to  file
 print(df_excel.head)
 df = pd.read_csv(file_path_csv)
 # print(df.head())
@@ -146,6 +146,7 @@ try:
 
     elif interpolation_type == '5':
         print("Lagrange interpolation selected.")
+        lagrange_interpolation = lagrange(column1, column3)
         interpolated_results = []
         for x_interp in clean_interpolated_energy:
             interpolated_value = lagrange_interpolation(x_interp, clean_energies, clean_values)
